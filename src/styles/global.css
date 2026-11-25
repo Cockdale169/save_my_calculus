@@ -312,11 +312,8 @@ a:hover {
   -webkit-backdrop-filter: saturate(160%) blur(20px);
   border-right: 1px solid var(--border);
   padding: 1rem 0.85rem 2.5rem;
-  position: sticky;
-  top: 57px;
-  height: calc(100vh - 57px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  position: static;
+  height: auto;
 }
 
 .sidebar-backdrop,
@@ -401,7 +398,6 @@ a:hover {
   transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease), border-color 0.28s var(--ease);
 }
 
-/* VisionOS Pointer Specular Spotlight */
 .spotlight-card {
   position: relative;
   overflow: hidden;
@@ -421,7 +417,6 @@ a:hover {
   opacity: 1;
 }
 
-/* Apple Keynote Dark Flagship Hero */
 .apple-hero {
   position: relative;
   overflow: hidden;
@@ -547,7 +542,6 @@ a:hover {
   transform: translateY(-1px);
 }
 
-/* Apple Bento Grid */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -600,7 +594,6 @@ a:hover {
   font-variant-numeric: tabular-nums;
 }
 
-/* Module Editorial Hero & Formula Stages */
 .module-hero {
   background: radial-gradient(circle at 95% 0%, rgba(0, 113, 227, 0.1), transparent 44%),
               radial-gradient(circle at 0% 100%, rgba(0, 130, 127, 0.07), transparent 42%),
@@ -666,7 +659,6 @@ a:hover {
   margin-top: 0.25rem;
 }
 
-/* Spotlight ⌘K Modal */
 .cmdk-backdrop {
   position: fixed;
   inset: 0;
@@ -867,11 +859,7 @@ a:hover {
 }
 
 .formula-aside {
-  position: sticky;
-  top: 74px;
-  max-height: calc(100vh - 90px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  position: static;
   background: var(--surface-glass);
   backdrop-filter: saturate(170%) blur(18px);
   -webkit-backdrop-filter: saturate(170%) blur(18px);
@@ -1217,7 +1205,6 @@ th {
   }
 }
 
-/* Phone Landscape Orientation: compact topbar + side-by-side Hero & Lab */
 @media (max-height: 540px) and (orientation: landscape) {
   .topbar {
     padding: 0.35rem max(1rem, env(safe-area-inset-right)) 0.35rem max(1rem, env(safe-area-inset-left));

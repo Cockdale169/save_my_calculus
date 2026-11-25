@@ -14,6 +14,7 @@ import {
 import { NODE_SUMMARIES } from '../data/curriculumIndex';
 import { CourseTag } from '../types/curriculum';
 import { UserProgressState } from '../store/progressStore';
+import { useI18n } from '../store/i18n';
 
 interface DashboardPageProps {
   progress: UserProgressState;
@@ -21,14 +22,6 @@ interface DashboardPageProps {
   onImport: (json: string) => boolean;
   onReset: () => void;
 }
-
-const FILTER_TABS: { key: 'ALL' | CourseTag; label: string }[] = [
-  { key: 'ALL', label: '全部教材' },
-  { key: 'HS', label: '高中先備' },
-  { key: 'C1', label: '微積分（一）' },
-  { key: 'C2', label: '微積分（二）' },
-  { key: 'APP', label: '生醫應用' },
-];
 
 const handleSpotlightMove = (e: React.PointerEvent<HTMLElement>) => {
   const rect = e.currentTarget.getBoundingClientRect();
@@ -42,9 +35,18 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   onImport,
   onReset,
 }) => {
+  const { lang, t } = useI18n();
   const fileRef = useRef<HTMLInputElement>(null);
   const [importMsg, setImportMsg] = useState<string>('');
   const [activeFilter, setActiveFilter] = useState<'ALL' | CourseTag>('ALL');
+
+  const filterTabs: { key: 'ALL' | CourseTag; label: string }[] = [
+    { key: 'ALL', label: t('filterAll') },
+    { key: 'HS', label: t('filterHS') },
+    { key: 'C1', label: t('filterC1') },
+    { key: 'C2', label: t('filterC2') },
+    { key: 'APP', label: t('filterApp') },
+  ];
 
   const verifiedSummaries = NODE_SUMMARIES.filter((n) => n.contentStatus === 'verified');
   const filteredModules =
@@ -80,7 +82,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     const reader = new FileReader();
     reader.onload = () => {
       const ok = onImport(String(reader.result ?? ''));
-      setImportMsg(ok ? '已成功匯入學習進度！' : '檔案格式錯誤，匯入失敗。');
+      setImportMsg(ok ? t('importOk') : t('importFail'));
     };
     reader.readAsText(file);
   };
@@ -90,22 +92,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       <section className="apple-hero spotlight-card" onPointerMove={handleSpotlightMove}>
         <div>
           <div className="apple-hero-eyebrow">
-            <Sparkles size={13} /> NYCU CALCULUS · PRO LEARNING SYSTEM
+            <Sparkles size={13} /> {t('heroEyebrow')}
           </div>
-          <h1 className="apple-hero-title">微積分，從未如此直覺。</h1>
-          <p className="apple-hero-sub">
-            結合高中先備補強、NYCU 微積分（一）（二）考試主線、可展開式沿革圖解與互動視覺化實驗室。
-            按 <code style={{ color: '#7dd3fc' }}>⌘K</code> 隨時秒速跳轉任何單元。
-          </p>
+          <h1 className="apple-hero-title">{t('heroTitle')}</h1>
+          <p className="apple-hero-sub">{t('heroSub')}</p>
           <div className="apple-hero-actions">
             <Link to="/course/c1" className="btn btn-primary" style={{ padding: '0.62rem 1.35rem', fontSize: '0.92rem' }}>
-              進入微積分（一）課程地圖 <ArrowRight size={15} />
+              {t('ctaC1')} <ArrowRight size={15} />
             </Link>
             <Link to="/practice" className="btn-glass-dark">
-              <Target size={15} /> 題庫與錯題複習
+              <Target size={15} /> {t('ctaPractice')}
             </Link>
             <Link to="/module/C1-INTEGRAL-FTC" className="btn-glass-dark">
-              <Flame size={15} /> 第 10 課：黎曼積分
+              <Flame size={15} /> {t('ctaLec10')}
             </Link>
           </div>
         </div>
@@ -162,16 +161,16 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
             <div>
               <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                課程完成度
+                {t('completionLabel')}
               </div>
               <div className="bento-metric" style={{ marginTop: '0.35rem' }}>
                 {readPct}%
               </div>
               <div style={{ fontSize: '0.86rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
-                已掌握 <strong>{readCount}</strong> / {totalCount} 個核心模塊
+                {t('masteredOf')} <strong>{readCount}</strong> / {totalCount} {t('coreModules')}
               </div>
             </div>
-            <svg width={94} height={94} viewBox="0 0 94 94" aria-label={`課程完成度 ${readPct}%`}>
+            <svg width={94} height={94} viewBox="0 0 94 94" aria-label={`${readPct}%`}>
               <defs>
                 <linearGradient id="appleRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#0071e3" />
@@ -200,19 +199,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         <div className="bento-tile bento-tile-dark spotlight-card bento-span-4" onPointerMove={handleSpotlightMove}>
           <div>
             <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#7dd3fc', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-              期末考衝刺直達（W9–W12）
+              {t('finalSprint')}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', marginTop: '0.75rem' }}>
               <Link to="/module/C1-CURVE-ANALYSIS" className="btn-glass-dark" style={{ justifyContent: 'space-between', padding: '0.42rem 0.85rem', fontSize: '0.82rem' }}>
-                <span>第 8 課：極值分析與定理</span>
+                <span>{t('lec8')}</span>
                 <ArrowRight size={13} />
               </Link>
               <Link to="/module/C1-LINEAR-APPROX" className="btn-glass-dark" style={{ justifyContent: 'space-between', padding: '0.42rem 0.85rem', fontSize: '0.82rem' }}>
-                <span>第 9 課：逼近・牛頓・ODE</span>
+                <span>{t('lec9')}</span>
                 <ArrowRight size={13} />
               </Link>
               <Link to="/module/C1-INTEGRAL-FTC" className="btn-glass-dark" style={{ justifyContent: 'space-between', padding: '0.42rem 0.85rem', fontSize: '0.82rem' }}>
-                <span>第 10 課：黎曼積分與 FTC</span>
+                <span>{t('lec10')}</span>
                 <ArrowRight size={13} />
               </Link>
             </div>
@@ -222,19 +221,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         <div className="bento-tile spotlight-card bento-span-4" onPointerMove={handleSpotlightMove}>
           <div>
             <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              實戰練習與待複習
+              {t('practiceAccuracy')}
             </div>
             <div className="bento-metric" style={{ marginTop: '0.35rem', color: accuracy !== null ? 'var(--primary)' : 'var(--text)' }}>
-              {accuracy !== null ? `${accuracy}%` : '準備就緒'}
+              {accuracy !== null ? `${accuracy}%` : t('ready')}
             </div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-              {accuracy !== null ? `已答對 ${totalCorrect} / ${totalAttempts} 題` : '從任一單元開始第一題練習'}
-              {' · '}待複習 <strong>{progress.reviewQueue.length}</strong> 個
+              {accuracy !== null ? `${totalCorrect} / ${totalAttempts}` : t('startFirst')}
+              {' · '}{t('toReview')} <strong>{progress.reviewQueue.length}</strong>
             </div>
           </div>
           <div style={{ marginTop: '0.85rem' }}>
             <Link to="/practice" className="btn btn-sm" style={{ width: '100%' }}>
-              開啟題庫與錯題本 <ArrowRight size={14} />
+              {t('openPractice')} <ArrowRight size={14} />
             </Link>
           </div>
         </div>
@@ -242,13 +241,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.8rem', marginBottom: '1rem' }}>
         <div>
-          <h2 style={{ margin: 0 }}>已上線教材模塊（{filteredModules.length}）</h2>
+          <h2 style={{ margin: 0 }}>{t('modulesHeading')} ({filteredModules.length})</h2>
           <div style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>
-            全單元通過數學檢核，支援白話圖解、沿革詳解與互動實驗室。
+            {t('modulesSub')}
           </div>
         </div>
         <div className="mode-tabs" style={{ marginBottom: 0 }}>
-          {FILTER_TABS.map((tab) => (
+          {filterTabs.map((tab) => (
             <button
               key={tab.key}
               type="button"
@@ -281,9 +280,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <span className={`badge badge-${node.priority.toLowerCase()}`}>{node.priority}</span>
                   <span className="badge badge-verified">verified</span>
                 </div>
-                <h3 style={{ margin: '0.2rem 0 0.25rem' }}>{node.title}</h3>
+                <h3 style={{ margin: '0.2rem 0 0.25rem' }}>{lang === 'en' ? node.englishTitle : node.title}</h3>
                 <div style={{ fontSize: '0.81rem', color: 'var(--text-muted)', marginBottom: '0.55rem' }}>
-                  {node.englishTitle}
+                  {lang === 'en' ? node.title : node.englishTitle}
                 </div>
                 {node.hsWeaknessNote && (
                   <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', margin: '0 0 0.65rem' }}>
@@ -293,11 +292,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem', paddingTop: '0.65rem', borderTop: '1px solid var(--border)' }}>
                 <Link to={`/module/${node.id}`} className="btn btn-primary btn-sm">
-                  進入學習 <ArrowRight size={13} />
+                  {t('enterModule')} <ArrowRight size={13} />
                 </Link>
                 <div style={{ display: 'flex', gap: '0.45rem', alignItems: 'center', fontSize: '0.78rem', fontWeight: 600 }}>
-                  {isRead && <span style={{ color: 'var(--ok)', display: 'inline-flex', alignItems: 'center', gap: 3 }}><CheckCircle2 size={14} /> 已讀</span>}
-                  {isReview && <span style={{ color: 'var(--warn)', display: 'inline-flex', alignItems: 'center', gap: 3 }}><Bookmark size={14} /> 待複習</span>}
+                  {isRead && <span style={{ color: 'var(--ok)', display: 'inline-flex', alignItems: 'center', gap: 3 }}><CheckCircle2 size={14} /> {t('read')}</span>}
+                  {isReview && <span style={{ color: 'var(--warn)', display: 'inline-flex', alignItems: 'center', gap: 3 }}><Bookmark size={14} /> {t('review')}</span>}
                 </div>
               </div>
             </div>
@@ -309,39 +308,39 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         <div className="bento-tile bento-span-7">
           <div>
             <h3 style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-              <AlertTriangle size={18} color="var(--warn)" /> 高中先備弱點預警
+              <AlertTriangle size={18} color="var(--warn)" /> {t('hsAlertTitle')}
             </h3>
             <ul style={{ margin: '0.5rem 0 1rem', paddingLeft: '1.2rem', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
               {NODE_SUMMARIES.filter((n) => n.hsWeaknessNote).map((n) => (
                 <li key={n.id} style={{ marginBottom: '0.35rem' }}>
-                  <strong style={{ color: 'var(--text)' }}>{n.title}</strong>：{n.hsWeaknessNote}
+                  <strong style={{ color: 'var(--text)' }}>{lang === 'en' ? n.englishTitle : n.title}</strong>：{n.hsWeaknessNote}
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <Link to="/map" className="btn btn-sm">查看完整先備依賴圖 <ArrowRight size={13} /></Link>
+            <Link to="/map" className="btn btn-sm">{t('viewFullMap')} <ArrowRight size={13} /></Link>
           </div>
         </div>
 
         <div className="bento-tile bento-span-5">
           <div>
-            <h3 style={{ marginTop: 0 }}>本機進度備份與管理</h3>
+            <h3 style={{ marginTop: 0 }}>{t('backupTitle')}</h3>
             <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>
-              所有已讀狀態、練習紀錄與自訂週次日期皆安全保存於本機瀏覽器 <code>localStorage</code>。建議定期匯出 JSON 備份。
+              {t('backupDesc')} (<code>localStorage</code>)
             </p>
           </div>
           <div>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              <button className="btn btn-sm" onClick={handleDownload}><Download size={14} /> 匯出進度</button>
-              <button className="btn btn-sm" onClick={() => fileRef.current?.click()}><Upload size={14} /> 匯入進度</button>
+              <button className="btn btn-sm" onClick={handleDownload}><Download size={14} /> {t('exportJson')}</button>
+              <button className="btn btn-sm" onClick={() => fileRef.current?.click()}><Upload size={14} /> {t('importJson')}</button>
               <button
                 className="btn btn-sm"
                 onClick={() => {
-                  if (window.confirm('確定要重設所有本機學習進度嗎？')) onReset();
+                  if (window.confirm(t('resetConfirm'))) onReset();
                 }}
               >
-                重設進度
+                {t('resetProgress')}
               </button>
               <input ref={fileRef} type="file" accept=".json" style={{ display: 'none' }} onChange={handleUpload} />
             </div>

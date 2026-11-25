@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { useProgressStore } from './store/progressStore';
+import { LanguageProvider } from './store/i18n';
 const DashboardPage = lazy(() => import('./modules/DashboardPage').then((m) => ({ default: m.DashboardPage })));
 const CourseMapPage = lazy(() => import('./modules/CourseMapPage').then((m) => ({ default: m.CourseMapPage })));
 const KnowledgeGraphPage = lazy(() => import('./modules/KnowledgeGraphPage').then((m) => ({ default: m.KnowledgeGraphPage })));
@@ -25,6 +26,7 @@ importProgress,
 resetProgress,
 } = useProgressStore();
 return (
+<LanguageProvider>
 <HashRouter>
 <Layout readNodes={state.readNodes}>
 <Suspense fallback={<PageLoader />}>
@@ -86,6 +88,7 @@ onRecordPractice={recordPractice}
 </Suspense>
 </Layout>
 </HashRouter>
+</LanguageProvider>
 );
 };
 export default App;

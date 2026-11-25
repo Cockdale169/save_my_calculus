@@ -12,6 +12,7 @@ import { MathEvolutionCard } from '../components/MathEvolutionCard';
 import { DecisionFlowchart } from '../components/DecisionFlowchart';
 import { VisualLabHost } from '../visualizations/VisualLabHost';
 import { UserProgressState } from '../store/progressStore';
+import { useI18n } from '../store/i18n';
 import { KnowledgeNode, PracticeQuestion } from '../types/curriculum';
 type StudyMode = 'study' | 'quick' | 'lab' | 'practice';
 interface ModulePageProps {
@@ -26,6 +27,7 @@ onToggleRead,
 onToggleReview,
 onRecordPractice,
 }) => {
+const { lang, t } = useI18n();
 const { nodeId = '' } = useParams();
 const [node, setNode] = useState<KnowledgeNode | null>(null);
 const [loading, setLoading] = useState(true);
@@ -77,38 +79,38 @@ return (
 {node.weeks.C1 && <span className="badge badge-ext">C1 W{node.weeks.C1.join(', W')}</span>}
 {node.weeks.C2 && <span className="badge badge-ext">C2 W{node.weeks.C2.join(', W')}</span>}
 </div>
-<h1 style={{ margin: '0.15rem 0' }}>{node.title}</h1>
-<div style={{ color: 'var(--text-muted)', fontSize: '0.92rem' }}>{node.englishTitle}</div>
+<h1 style={{ margin: '0.15rem 0' }}>{lang === 'en' ? node.englishTitle : node.title}</h1>
+<div style={{ color: 'var(--text-muted)', fontSize: '0.92rem' }}>{lang === 'en' ? node.title : node.englishTitle}</div>
 </div>
 <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap' }}>
 <button className={`btn btn-sm ${isRead ? 'btn-primary' : ''}`} onClick={() => onToggleRead(node.id)}>
-<CheckCircle2 size={15} /> {isRead ? '已讀' : '標記已讀'}
+<CheckCircle2 size={15} /> {isRead ? t('read') : t('markRead')}
 </button>
 <button className={`btn btn-sm ${isReview ? 'btn-primary' : ''}`} onClick={() => onToggleReview(node.id)}>
-<Bookmark size={15} /> {isReview ? '已加待複習' : '加入待複習'}
+<Bookmark size={15} /> {isReview ? t('bookmarked') : t('addReview')}
 </button>
 <button className="btn btn-sm" onClick={() => setAsideOpen((v) => !v)}>
 {asideOpen ? <PanelRightClose size={15} /> : <PanelRightOpen size={15} />}
-{asideOpen ? '收合公式欄' : '展開公式欄'}
+{asideOpen ? t('hideFormulas') : t('showFormulas')}
 </button>
 </div>
 </div>
 <div className="callout" style={{ marginBottom: 0 }}>
-<strong>一句話核心：</strong><MathText text={node.sections.oneLineSummary} />
+<strong>{t('oneLineCore')}</strong><MathText text={node.sections.oneLineSummary} />
 </div>
 </div>
 <div className="mode-tabs" role="tablist">
 <button className={`mode-tab ${mode === 'study' ? 'active' : ''}`} onClick={() => setMode('study')}>
-<BookOpen size={16} /> 完整教學（從符號到詳解）
+<BookOpen size={16} /> {t('tabStudy')}
 </button>
 <button className={`mode-tab ${mode === 'quick' ? 'active' : ''}`} onClick={() => setMode('quick')}>
-<Zap size={16} /> 30秒複習與題型
+<Zap size={16} /> {t('tabQuick')}
 </button>
 <button className={`mode-tab ${mode === 'lab' ? 'active' : ''}`} onClick={() => setMode('lab')}>
-<Sliders size={16} /> 互動實驗室
+<Sliders size={16} /> {t('tabLab')}
 </button>
 <button className={`mode-tab ${mode === 'practice' ? 'active' : ''}`} onClick={() => setMode('practice')}>
-<PenTool size={16} /> 練習題
+<PenTool size={16} /> {t('tabPractice')}
 </button>
 </div>
 <div className={`module-layout ${asideOpen ? '' : 'no-aside'}`}>
@@ -117,12 +119,12 @@ return (
 <div>
 <div className="anchor-strip">
 {[
-{ id: 'sec-symbols', label: '符號文法' },
-{ id: 'sec-concept', label: '核心直覺與定義' },
-{ id: 'sec-formulas', label: '公式與條件' },
-{ id: 'sec-steps', label: '圖文步驟' },
-{ id: 'sec-examples', label: `完整例題 (${node.sections.workedExamples.length})` },
-{ id: 'sec-errors', label: '常見錯誤' },
+{ id: 'sec-symbols', label: t('secSymbols') },
+{ id: 'sec-concept', label: t('secConcept') },
+{ id: 'sec-formulas', label: t('secFormulas') },
+{ id: 'sec-steps', label: t('secSteps') },
+{ id: 'sec-examples', label: `${t('secExamples')} (${node.sections.workedExamples.length})` },
+{ id: 'sec-errors', label: t('secErrors') },
 ].map((sec) => (
 <button
 key={sec.id}

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, ArrowRight, Compass, BookOpen } from 'lucide-react';
 import { NODE_SUMMARIES } from '../data/curriculumIndex';
+import { useI18n } from '../store/i18n';
 
 interface SpotlightSearchProps {
   open: boolean;
@@ -27,6 +28,7 @@ const QUICK_PAGES: SearchEntry[] = [
 ];
 
 export const SpotlightSearch: React.FC<SpotlightSearchProps> = ({ open, onClose }) => {
+  const { lang, t } = useI18n();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
@@ -35,14 +37,14 @@ export const SpotlightSearch: React.FC<SpotlightSearchProps> = ({ open, onClose 
   const allEntries = useMemo<SearchEntry[]>(() => {
     const modules: SearchEntry[] = NODE_SUMMARIES.filter((n) => n.contentStatus === 'verified').map((n) => ({
       id: n.id,
-      title: n.title,
-      subtitle: n.englishTitle,
+      title: lang === 'en' ? n.englishTitle : n.title,
+      subtitle: lang === 'en' ? n.title : n.englishTitle,
       path: `/module/${n.id}`,
       kind: 'module',
       badges: [...n.courseTags, n.priority],
     }));
     return [...modules, ...QUICK_PAGES];
-  }, []);
+  }, [lang]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -99,7 +101,7 @@ export const SpotlightSearch: React.FC<SpotlightSearchProps> = ({ open, onClose 
           <input
             ref={inputRef}
             className="cmdk-input"
-            placeholder="搜尋章節、微積分主題、英文名詞（如 Riemann, Taylor, ODE）..."
+            placeholder={t('searchPlaceholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />

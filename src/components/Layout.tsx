@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { BookOpen, Menu, X, CheckCircle2, Search, Moon, Sun, ArrowUp } from 'lucide-react';
+import { BookOpen, Menu, X, CheckCircle2, Search, Moon, Sun, ArrowUp, Languages } from 'lucide-react';
 import { NODE_SUMMARIES } from '../data/curriculumIndex';
+import { useI18n } from '../store/i18n';
 import { SpotlightSearch } from './SpotlightSearch';
 
 interface LayoutProps {
@@ -10,6 +11,7 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
+  const { lang, toggleLang, t } = useI18n();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(() => {
     if (typeof window !== 'undefined' && window.innerWidth <= 768) return false;
@@ -29,9 +31,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
     document.documentElement.dataset.theme = theme;
     try {
       localStorage.setItem('csk-theme', theme);
-    } catch {
-      // ignore storage errors
-    }
+    } catch {}
   }, [theme]);
 
   useEffect(() => {
@@ -69,8 +69,8 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
           <button
             className="btn btn-sm"
             onClick={() => setSidebarOpen((v) => !v)}
-            aria-label="切換側邊導覽"
-            title="切換側邊導覽"
+            aria-label={t('sidebarTitle')}
+            title={t('sidebarTitle')}
           >
             {sidebarOpen ? <X size={15} /> : <Menu size={15} />}
           </button>
@@ -78,28 +78,28 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
             <span className="brand-mark">
               <BookOpen size={16} />
             </span>
-            <span>Calculus Survival Kit</span>
+            <span>{t('brand')}</span>
           </Link>
         </div>
 
-        <nav className="topnav" aria-label="主導覽">
+        <nav className="topnav" aria-label="Main navigation">
           <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            學習總覽
+            {t('navOverview')}
           </NavLink>
           <NavLink to="/course/c1" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            微積分（一）
+            {t('navC1')}
           </NavLink>
           <NavLink to="/course/c2" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            微積分（二）
+            {t('navC2')}
           </NavLink>
           <NavLink to="/map" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            先備依賴圖
+            {t('navMap')}
           </NavLink>
           <NavLink to="/practice" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            題庫與錯題本
+            {t('navPractice')}
           </NavLink>
           <NavLink to="/glossary" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            術語表
+            {t('navGlossary')}
           </NavLink>
         </nav>
 
@@ -108,18 +108,27 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
             type="button"
             className="cmdk-trigger"
             onClick={() => setSpotlightOpen(true)}
-            title="快速搜尋教材 (Ctrl+K / ⌘K)"
+            title="Spotlight Search (Ctrl+K / ⌘K)"
           >
             <Search size={14} />
-            <span>搜尋</span>
+            <span>{t('searchBtn')}</span>
             <span className="kbd-pill">⌘K</span>
           </button>
           <button
             type="button"
             className="btn btn-sm"
-            onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
-            aria-label={theme === 'light' ? '切換至深色專業模式' : '切換至淺色陶瓷模式'}
-            title={theme === 'light' ? '切換至深色專業模式' : '切換至淺色陶瓷模式'}
+            onClick={toggleLang}
+            aria-label="Switch Language"
+            title={lang === 'en' ? '切換至繁體中文' : 'Switch to English'}
+          >
+            <Languages size={14} />
+            <span>{lang === 'en' ? '中' : 'EN'}</span>
+          </button>
+          <button
+            type="button"
+            className="btn btn-sm"
+            onClick={() => setTheme((th) => (th === 'light' ? 'dark' : 'light'))}
+            aria-label="Toggle theme"
           >
             {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
           </button>
@@ -128,28 +137,24 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
 
       <div className={`workspace-grid ${sidebarOpen ? '' : 'sidebar-collapsed'}`}>
         {sidebarOpen && (
-          <div
-            className="sidebar-backdrop"
-            onClick={() => setSidebarOpen(false)}
-            aria-hidden="true"
-          />
+          <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} aria-hidden="true" />
         )}
         {sidebarOpen && (
-          <aside className="sidebar" aria-label="章節導覽">
+          <aside className="sidebar" aria-label={t('sidebarTitle')}>
             <div className="sidebar-mobile-header">
-              <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>章節導覽</span>
+              <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{t('sidebarTitle')}</span>
               <button
                 type="button"
                 className="btn btn-sm"
                 onClick={() => setSidebarOpen(false)}
-                aria-label="關閉章節導覽"
+                aria-label={t('close')}
               >
-                <X size={15} /> 關閉
+                <X size={15} /> {t('close')}
               </button>
             </div>
             <div className="sidebar-progress-card">
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 600 }}>
-                <span>學習進度</span>
+                <span>{t('progressLabel')}</span>
                 <span style={{ color: 'var(--primary)', fontVariantNumeric: 'tabular-nums' }}>
                   {readNodes.length}/{verifiedNodes.length} ({readPct}%)
                 </span>
@@ -159,16 +164,19 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
               </div>
             </div>
 
-            <div className="sidebar-section-title">已上線教材模塊 ({verifiedNodes.length})</div>
+            <div className="sidebar-section-title">{t('liveModules')} ({verifiedNodes.length})</div>
             {verifiedNodes.map((node) => {
               const isRead = readNodes.includes(node.id);
               return (
                 <NavLink
                   key={node.id}
                   to={`/module/${node.id}`}
+                  onClick={() => {
+                    if (window.innerWidth <= 768) setSidebarOpen(false);
+                  }}
                   className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}
                 >
-                  <span>{node.title}</span>
+                  <span>{lang === 'en' ? node.englishTitle : node.title}</span>
                   {isRead && <CheckCircle2 size={14} color="var(--ok)" />}
                 </NavLink>
               );
@@ -176,16 +184,19 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
 
             {plannedNodes.length > 0 && (
               <>
-                <div className="sidebar-section-title">後續規劃節點 ({plannedNodes.length})</div>
+                <div className="sidebar-section-title">{t('plannedModules')} ({plannedNodes.length})</div>
                 {plannedNodes.map((node) => (
                   <Link
                     key={node.id}
                     to={`/course/${node.courseTags.includes('C2') && !node.courseTags.includes('C1') ? 'c2' : 'c1'}`}
+                    onClick={() => {
+                      if (window.innerWidth <= 768) setSidebarOpen(false);
+                    }}
                     className="sidebar-item"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    <span>{node.title}</span>
-                    <span className="badge badge-planned">規劃中</span>
+                    <span>{lang === 'en' ? node.englishTitle : node.title}</span>
+                    <span className="badge badge-planned">{t('plannedBadge')}</span>
                   </Link>
                 ))}
               </>
@@ -200,10 +211,10 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
           type="button"
           className="btn btn-sm back-to-top-btn"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="回到頂部"
-          title="回到頂部"
+          aria-label={t('backToTop')}
+          title={t('backToTop')}
         >
-          <ArrowUp size={15} /> 頂部
+          <ArrowUp size={15} /> {t('backToTop')}
         </button>
       )}
 
