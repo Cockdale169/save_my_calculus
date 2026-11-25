@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { BookOpen, Menu, X, CheckCircle2, Search, Moon, Sun } from 'lucide-react';
+import { BookOpen, Menu, X, CheckCircle2, Search, Moon, Sun, ArrowUp } from 'lucide-react';
 import { NODE_SUMMARIES } from '../data/curriculumIndex';
 import { SpotlightSearch } from './SpotlightSearch';
 
@@ -194,6 +194,18 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
         )}
         <main className="main-content">{children}</main>
       </div>
+
+      {scrollPct > 12 && (
+        <button
+          type="button"
+          className="btn btn-sm back-to-top-btn"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="回到頂部"
+          title="回到頂部"
+        >
+          <ArrowUp size={15} /> 頂部
+        </button>
+      )}
 
       <SpotlightSearch open={spotlightOpen} onClose={() => setSpotlightOpen(false)} />
     </div>

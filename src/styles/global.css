@@ -871,6 +871,9 @@ a:hover {
 .formula-aside {
   position: sticky;
   top: 74px;
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--surface-glass);
   backdrop-filter: saturate(170%) blur(18px);
   -webkit-backdrop-filter: saturate(170%) blur(18px);
@@ -878,6 +881,19 @@ a:hover {
   border-radius: var(--radius);
   padding: 1.25rem;
   box-shadow: var(--shadow);
+}
+
+.back-to-top-btn {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 50;
+  background: var(--surface-glass);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-hover);
+  animation: fadeSlideUp 0.22s var(--ease);
 }
 
 .callout {
