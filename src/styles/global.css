@@ -80,7 +80,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -88,7 +88,7 @@ html {
 
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang TC", "Noto Sans TC", "Segoe UI", sans-serif;
   background: radial-gradient(circle at 12% 0%, rgba(0, 113, 227, 0.055), transparent 38%),
               radial-gradient(circle at 88% 8%, rgba(94, 92, 230, 0.05), transparent 36%),
@@ -312,8 +312,10 @@ a:hover {
   -webkit-backdrop-filter: saturate(160%) blur(20px);
   border-right: 1px solid var(--border);
   padding: 1rem 0.85rem 2.5rem;
-  position: static;
-  height: auto;
+  position: sticky;
+  top: 57px;
+  height: calc(100vh - 57px);
+  overflow-y: auto;
 }
 
 .sidebar-backdrop,
@@ -631,8 +633,6 @@ a:hover {
   padding: 1.25rem 1.35rem;
   margin-bottom: 1.15rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.025);
-  content-visibility: auto;
-  contain-intrinsic-size: auto 280px;
 }
 
 .step-row {
@@ -861,7 +861,10 @@ a:hover {
 }
 
 .formula-aside {
-  position: static;
+  position: sticky;
+  top: 74px;
+  max-height: calc(100vh - 92px);
+  overflow-y: auto;
   background: var(--surface-glass);
   backdrop-filter: saturate(170%) blur(18px);
   -webkit-backdrop-filter: saturate(170%) blur(18px);
@@ -1056,6 +1059,16 @@ th {
   display: none;
 }
 
+@media (max-width: 1180px) {
+  .module-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .formula-aside {
+    position: static;
+    max-height: none;
+  }
+}
+
 @media (max-width: 1024px) {
   .apple-hero {
     grid-template-columns: minmax(0, 1fr);
@@ -1066,12 +1079,6 @@ th {
   .bento-span-7,
   .bento-span-8 {
     grid-column: span 12;
-  }
-  .module-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .formula-aside {
-    position: static;
   }
   .lab-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -1244,5 +1251,14 @@ th {
 @media (min-width: 1600px) {
   .main-content {
     max-width: 1380px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

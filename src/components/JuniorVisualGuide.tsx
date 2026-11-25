@@ -1,6 +1,7 @@
 import React from 'react';
 import { JuniorGuide } from '../types/curriculum';
 import { MathText } from './MathText';
+import { useI18n } from '../store/i18n';
 const VisualDiagramSvg: React.FC<{ type: JuniorGuide['visualType'] }> = ({ type }) => {
 if (type === 'chain') {
 return (
@@ -104,10 +105,12 @@ return (
 );
 };
 export const JuniorVisualGuide: React.FC<{ guide: JuniorGuide }> = ({ guide }) => {
+const { lang } = useI18n();
+const isEn = lang === 'en';
 return (
 <div className="card" style={{ borderLeft: '4px solid var(--accent)', background: 'var(--tint-teal)' }}>
 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-<span className="badge badge-app">國一～國三白話圖解導引</span>
+<span className="badge badge-app">{isEn ? 'Plain-Language Visual Guide' : '國一～國三白話圖解導引'}</span>
 <h3 style={{ margin: 0 }}><MathText text={guide.analogyTitle} /></h3>
 </div>
 <p style={{ marginTop: '0.4rem' }}><MathText text={guide.analogyStory} /></p>
@@ -116,13 +119,13 @@ return (
 </div>
 {guide.stepByStepDecode.length > 0 && (
 <div style={{ marginTop: '0.75rem' }}>
-<strong style={{ fontSize: '0.9rem' }}>這章的符號怎麼用白話唸？</strong>
+<strong style={{ fontSize: '0.9rem' }}>{isEn ? 'How to read the symbols in plain English:' : '這章的符號怎麼用白話唸？'}</strong>
 <div className="table-scroll" style={{ marginTop: '0.35rem' }}>
 <table>
 <thead>
 <tr>
-<th style={{ width: 170 }}>看到的數學符號</th>
-<th>白話翻譯（代表什麼意思）</th>
+<th style={{ width: 170 }}>{isEn ? 'Math Symbol' : '看到的數學符號'}</th>
+<th>{isEn ? 'Plain-Language Meaning' : '白話翻譯（代表什麼意思）'}</th>
 </tr>
 </thead>
 <tbody>

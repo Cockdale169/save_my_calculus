@@ -146,17 +146,17 @@ onClick={() => document.getElementById(sec.id)?.scrollIntoView({ behavior: 'smoo
 <MathEvolutionCard steps={node.sections.mathEvolution} />
 )}
 <div id="sec-concept" className="card">
-<h2 style={{ marginTop: 0 }}>1. 這個概念解決什麼問題？</h2>
+<h2 style={{ marginTop: 0 }}>{t('hConcept')}</h2>
 <p><MathText text={node.sections.problemSolved} /></p>
-<h3>白話直覺</h3>
+<h3>{t('hIntuition')}</h3>
 <p><MathText text={node.sections.intuition} /></p>
 {node.sections.definition && (
 <>
-<h3>正式定義</h3>
+<h3>{t('hDefinition')}</h3>
 <div className="callout"><MathText text={node.sections.definition} /></div>
 </>
 )}
-<h3>圖像與幾何意義</h3>
+<h3>{t('hGeometry')}</h3>
 <p style={{ marginBottom: 0 }}><MathText text={node.sections.geometricMeaning} /></p>
 </div>
 <div id="sec-formulas" className="card">
@@ -209,7 +209,7 @@ onClick={() => document.getElementById(sec.id)?.scrollIntoView({ behavior: 'smoo
 </p>
 {ex.modelAssumptions && (
 <div className="callout warn" style={{ fontSize: '0.86rem' }}>
-<strong>模型假設：</strong>{ex.modelAssumptions}
+<strong>{lang === 'en' ? 'Model Assumptions: ' : '模型假設：'}</strong><MathText text={ex.modelAssumptions} />
 </div>
 )}
 <div style={{ marginTop: '0.75rem' }}>
@@ -294,7 +294,7 @@ onClick={() => document.getElementById(sec.id)?.scrollIntoView({ behavior: 'smoo
 node.sections.workedExamples.length > 0 && (
 <div className="card">
 <span className="badge badge-c1">30 秒例題範例</span>
-<h3 style={{ marginTop: '0.35rem' }}>{node.sections.workedExamples[0].title}</h3>
+<h3 style={{ marginTop: '0.35rem' }}><MathText text={node.sections.workedExamples[0].title} /></h3>
 <p style={{ fontSize: '0.9rem' }}><MathText text={node.sections.workedExamples[0].problem} /></p>
 <div className="callout ok" style={{ marginBottom: 0, fontSize: '0.88rem' }}>
 <strong>快速結論：</strong><MathText text={node.sections.workedExamples[0].answer} />
@@ -326,32 +326,33 @@ onRecord={onRecordPractice}
 </div>
 {asideOpen && (
 <aside className="formula-aside">
-<h3 style={{ marginTop: 0 }}>核心公式速查</h3>
+<h3 style={{ marginTop: 0 }}>{t('hQuickFormulas')}</h3>
 {node.sections.formulas.map((f, i) => (
 <div key={i} style={{ marginBottom: '0.85rem', paddingBottom: '0.6rem', borderBottom: '1px solid var(--border)' }}>
-<div style={{ fontWeight: 600, fontSize: '0.86rem' }}>{f.name}</div>
+<div style={{ fontWeight: 600, fontSize: '0.86rem' }}><MathText text={f.name} /></div>
 <MathText text={f.latex} block />
 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-條件：<MathText text={f.conditions} />
+{t('conditions')}<MathText text={f.conditions} />
 </div>
 </div>
 ))}
-<h4>先備知識</h4>
+<h4>{t('hPrereqs')}</h4>
 <ul style={{ fontSize: '0.86rem', paddingLeft: '1.1rem' }}>
 {node.prerequisites.map((pid) => {
 const p = NODE_MAP.get(pid);
+const pLabel = p ? (lang === 'en' ? p.englishTitle : p.title) : pid;
 return (
 <li key={pid}>
-{p?.contentStatus === 'verified' ? <Link to={`/module/${pid}`}>{p.title}</Link> : p?.title ?? pid}
+{p?.contentStatus === 'verified' ? <Link to={`/module/${pid}`}>{pLabel}</Link> : pLabel}
 </li>
 );
 })}
 </ul>
 {node.needsLectureCheck && node.needsLectureCheck.length > 0 && (
 <div className="callout warn" style={{ fontSize: '0.8rem', marginBottom: 0 }}>
-<strong>需依課堂講義確認：</strong>
+<strong>{lang === 'en' ? 'Confirm with Lecture Notes:' : '需依課堂講義確認：'}</strong>
 <ul style={{ margin: '0.25rem 0 0', paddingLeft: '1rem' }}>
-{node.needsLectureCheck.map((item, idx) => <li key={idx}>{item}</li>)}
+{node.needsLectureCheck.map((item, idx) => <li key={idx}><MathText text={item} /></li>)}
 </ul>
 </div>
 )}

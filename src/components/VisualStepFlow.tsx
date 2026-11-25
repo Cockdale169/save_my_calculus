@@ -1,6 +1,7 @@
 import React from 'react';
 import { VisualStep } from '../types/curriculum';
 import { MathText } from './MathText';
+import { useI18n } from '../store/i18n';
 const StepDiagramSvg: React.FC<{ type: VisualStep['diagramType'] }> = ({ type }) => {
 switch (type) {
 case 'observe':
@@ -50,11 +51,13 @@ return (
 }
 };
 export const VisualStepFlow: React.FC<{ steps: VisualStep[] }> = ({ steps }) => {
+const { lang } = useI18n();
+const isEn = lang === 'en';
 return (
 <div className="card">
 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.6rem' }}>
-<span className="badge badge-app">圖文分步導引</span>
-<h2 style={{ margin: 0 }}>每一步都先看圖與生活譬喻，再看算式！</h2>
+<span className="badge badge-app">{isEn ? 'Visual Step Guide' : '圖文分步導引'}</span>
+<h2 style={{ margin: 0 }}>{isEn ? 'See the Diagram & Metaphor Before the Equations!' : '每一步都先看圖與生活譬喻，再看算式！'}</h2>
 </div>
 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
 {steps.map((st, idx) => (
@@ -76,16 +79,16 @@ background: 'var(--surface-alt)',
 </div>
 <div style={{ flex: 1, minWidth: 220 }}>
 <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--primary)', marginBottom: '0.25rem' }}>
-步驟 {idx + 1}：{st.stepTitle}
+{isEn ? `Step ${idx + 1}: ` : `步驟 ${idx + 1}：`}<MathText text={st.stepTitle} />
 </div>
 <div style={{ fontSize: '0.9rem', marginBottom: '0.25rem' }}>
-<strong>生活譬喻：</strong><MathText text={st.metaphor} />
+<strong>{isEn ? 'Metaphor: ' : '生活譬喻：'}</strong><MathText text={st.metaphor} />
 </div>
 <div style={{ fontSize: '0.9rem', marginBottom: '0.25rem', color: 'var(--tint-teal-text)' }}>
-<strong>應用小例子：</strong><MathText text={st.appliedExample} />
+<strong>{isEn ? 'Mini Example: ' : '應用小例子：'}</strong><MathText text={st.appliedExample} />
 </div>
 <div style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>
-<strong>對應算式：</strong><MathText text={st.formulaHint} />
+<strong>{isEn ? 'Formula Hint: ' : '對應算式：'}</strong><MathText text={st.formulaHint} />
 </div>
 </div>
 </div>

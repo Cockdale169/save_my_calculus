@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { StrategyTrainerItem } from '../types/curriculum';
 import { MathText } from './MathText';
+import { useI18n } from '../store/i18n';
 export const StrategyTrainerCard: React.FC<{ items: StrategyTrainerItem[] }> = ({ items }) => {
+const { lang } = useI18n();
+const isEn = lang === 'en';
 const [selected, setSelected] = useState<Record<number, number>>({});
 return (
 <div className="card" style={{ borderLeft: '4px solid var(--primary)' }}>
 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-<span className="badge badge-c1">解題技巧互動推演</span>
-<h2 style={{ margin: 0, fontSize: '1.15rem' }}>看到題目先別急著算！練習「挑對工具」</h2>
+<span className="badge badge-c1">{isEn ? 'Strategy Trainer' : '解題技巧互動推演'}</span>
+<h2 style={{ margin: 0, fontSize: '1.15rem' }}>{isEn ? 'Pick the Right Tool Before Computing!' : '看到題目先別急著算！練習「挑對工具」'}</h2>
 </div>
 {items.map((item, idx) => {
 const picked = selected[idx];

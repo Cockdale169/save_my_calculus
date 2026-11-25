@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { BookOpen, Menu, X, CheckCircle2, Search, Moon, Sun, ArrowUp, Languages } from 'lucide-react';
 import { NODE_SUMMARIES } from '../data/curriculumIndex';
@@ -17,8 +17,9 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
     if (typeof window !== 'undefined' && window.innerWidth <= 768) return false;
     return true;
   });
+  const progressBarRef = useRef<HTMLDivElement>(null);
   const [spotlightOpen, setSpotlightOpen] = useState(false);
-  const [scrollPct, setScrollPct] = useState(0);
+  const [showBackTop, setShowBackTop] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     try {
       return localStorage.getItem('csk-theme') === 'dark' ? 'dark' : 'light';
@@ -46,14 +47,31 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [location.pathname]);
+
+  useEffect(() => {
+    let rafId = 0;
+    const update = () => {
+      rafId = 0;
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
-      setScrollPct(max > 0 ? Math.min(100, Math.round((window.scrollY / max) * 100)) : 0);
+      const pct = max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0;
+      if (progressBarRef.current) {
+        progressBarRef.current.style.width = `${pct}%`;
+        progressBarRef.current.style.opacity = pct > 1 ? '1' : '0';
+      }
+      setShowBackTop((prev) => (prev === (pct > 12) ? prev : pct > 12));
     };
-    onScroll();
+    const onScroll = () => {
+      if (!rafId) rafId = window.requestAnimationFrame(update);
+    };
+    update();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
   }, [location.pathname]);
 
   const verifiedNodes = NODE_SUMMARIES.filter((n) => n.contentStatus === 'verified');
@@ -62,7 +80,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
 
   return (
     <div className="app-shell">
-      {scrollPct > 1 && <div className="reading-progress-bar" style={{ width: `${scrollPct}%` }} />}
+      <div ref={progressBarRef} className="reading-progress-bar" style={{ width: '0%', opacity: 0 }} />
 
       <header className="topbar">
         <div className="topbar-left">
@@ -206,7 +224,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
         <main className="main-content">{children}</main>
       </div>
 
-      {scrollPct > 12 && (
+      {showBackTop && (
         <button
           type="button"
           className="btn btn-sm back-to-top-btn"

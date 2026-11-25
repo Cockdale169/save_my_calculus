@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SymbolRule } from '../types/curriculum';
 import { MathText } from './MathText';
+import { useI18n } from '../store/i18n';
 const UNIVERSAL_GRAMMAR: SymbolRule[] = [
 {
 symbol: '$f(x)$',
@@ -25,16 +26,20 @@ avoidConfusion: '$\\sin^{-1}(x)$ 是反三角函數，不是 $\\frac{1}{\\sin x}
 },
 ];
 export const SymbolRulesCard: React.FC<{ moduleRules?: SymbolRule[] }> = ({ moduleRules }) => {
+const { lang } = useI18n();
+const isEn = lang === 'en';
 const [showUniversal, setShowUniversal] = useState<boolean>(false);
 return (
 <div className="card" style={{ borderLeft: '4px solid #7c3aed', background: 'var(--tint-purple)' }}>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-<span className="badge badge-c2">零基礎符號文法</span>
-<h3 style={{ margin: 0 }}>看不懂數學符號？先花 30 秒搞懂寫法規則！</h3>
+<span className="badge badge-c2">{isEn ? 'Symbol Grammar' : '零基礎符號文法'}</span>
+<h3 style={{ margin: 0 }}>{isEn ? 'New to these symbols? Decode the notation in 30 seconds!' : '看不懂數學符號？先花 30 秒搞懂寫法規則！'}</h3>
 </div>
 <button className="btn btn-sm" onClick={() => setShowUniversal((v) => !v)}>
-{showUniversal ? '收合基礎符號文法' : '展開通用基礎文法（括號/上下標）'}
+{showUniversal
+  ? (isEn ? 'Hide Basic Grammar' : '收合基礎符號文法')
+  : (isEn ? 'Show Basic Grammar (Brackets / Scripts)' : '展開通用基礎文法（括號/上下標）')}
 </button>
 </div>
 {showUniversal && (
@@ -68,7 +73,7 @@ return (
 )}
 {moduleRules && moduleRules.length > 0 && (
 <div style={{ marginTop: '0.75rem' }}>
-<strong style={{ fontSize: '0.9rem', color: 'var(--tint-purple-text)' }}>本單元專屬新符號規則：</strong>
+<strong style={{ fontSize: '0.9rem', color: 'var(--tint-purple-text)' }}>{isEn ? 'Module-Specific Notation:' : '本單元專屬新符號規則：'}</strong>
 <div className="card-grid" style={{ marginTop: '0.45rem' }}>
 {moduleRules.map((r, i) => (
 <div key={i} style={{ background: 'var(--surface)', border: '1px solid var(--tint-purple-border)', borderRadius: 12, padding: '0.85rem' }}>
@@ -76,16 +81,16 @@ return (
 <MathText text={r.symbol} />
 </div>
 <div style={{ fontSize: '0.86rem', marginBottom: '0.25rem' }}>
-<strong>怎麼唸：</strong><MathText text={r.readAs} />
+<strong>{isEn ? 'Read as: ' : '怎麼唸：'}</strong><MathText text={r.readAs} />
 </div>
 <div style={{ fontSize: '0.85rem', marginBottom: '0.25rem' }}>
-<strong>符號規則：</strong><MathText text={r.grammarRule} />
+<strong>{isEn ? 'Rule: ' : '符號規則：'}</strong><MathText text={r.grammarRule} />
 </div>
 <div style={{ fontSize: '0.85rem', marginBottom: '0.25rem', color: 'var(--primary)' }}>
-<strong>生活譬喻：</strong><MathText text={r.metaphor} />
+<strong>{isEn ? 'Metaphor: ' : '生活譬喻：'}</strong><MathText text={r.metaphor} />
 </div>
 <div style={{ fontSize: '0.83rem', color: 'var(--danger)' }}>
-<strong>易混淆：</strong><MathText text={r.avoidConfusion} />
+<strong>{isEn ? 'Avoid confusion: ' : '易混淆：'}</strong><MathText text={r.avoidConfusion} />
 </div>
 </div>
 ))}

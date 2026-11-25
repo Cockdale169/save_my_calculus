@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronRight, Sparkles } from 'lucide-react';
 import { EvolutionDiagramType, MathEvolutionStep } from '../types/curriculum';
 import { MathText } from './MathText';
+import { useI18n } from '../store/i18n';
 const EvolutionSvg: React.FC<{ type: EvolutionDiagramType }> = ({ type }) => {
 switch (type) {
 case 'archimedes-exhaustion':
@@ -148,6 +149,8 @@ return (
 }
 };
 export const MathEvolutionCard: React.FC<{ steps: MathEvolutionStep[] }> = ({ steps }) => {
+const { lang } = useI18n();
+const isEn = lang === 'en';
 const [openIndices, setOpenIndices] = useState<Record<number, boolean>>(() => {
 const firstWithDive = steps.findIndex((s) => Boolean(s.deepDive));
 return firstWithDive >= 0 ? { [firstWithDive]: true } : {};
@@ -169,12 +172,12 @@ return (
 <div className="card" style={{ borderLeft: '4px solid var(--warn)', background: 'var(--tint-amber)' }}>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
 <div>
-<span className="badge badge-hs">數學演進脈絡</span>
-<h2 style={{ margin: '0.35rem 0 0' }}>前人為什麼要發明這個概念？（沿革故事與圖文詳解）</h2>
+<span className="badge badge-hs">{isEn ? 'Math Evolution' : '數學演進脈絡'}</span>
+<h2 style={{ margin: '0.35rem 0 0' }}>{isEn ? 'Why Was This Invented? (Evolution & Illustrated Guide)' : '前人為什麼要發明這個概念？（沿革故事與圖文詳解）'}</h2>
 </div>
 {hasAnyDeepDive && (
 <button type="button" className="btn btn-sm" onClick={toggleAll}>
-<Sparkles size={14} /> {allOpen ? '全部收合' : '展開全部圖解'}
+<Sparkles size={14} /> {allOpen ? (isEn ? 'Collapse All' : '全部收合') : (isEn ? 'Expand All Diagrams' : '展開全部圖解')}
 </button>
 )}
 </div>
@@ -203,10 +206,10 @@ borderBottom: '1px solid var(--tint-amber-border)',
 {idx + 1}. <MathText text={ev.stage} />
 </div>
 <div style={{ fontSize: '0.88rem', marginTop: '0.25rem' }}>
-<strong>遇到的難題：</strong><MathText text={ev.question} />
+<strong>{isEn ? 'Challenge: ' : '遇到的難題：'}</strong><MathText text={ev.question} />
 </div>
 <div style={{ fontSize: '0.88rem', color: 'var(--primary)', marginTop: '0.2rem' }}>
-<strong>關鍵突破：</strong><MathText text={ev.breakthrough} />
+<strong>{isEn ? 'Breakthrough: ' : '關鍵突破：'}</strong><MathText text={ev.breakthrough} />
 </div>
 </div>
 {ev.deepDive && (
@@ -218,7 +221,7 @@ aria-expanded={isOpen}
 style={{ flexShrink: 0 }}
 >
 {isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-{isOpen ? '收合圖文詳解' : '點開圖文詳解'}
+{isOpen ? (isEn ? 'Hide Visual Guide' : '收合圖文詳解') : (isEn ? 'Open Visual Guide' : '點開圖文詳解')}
 </button>
 )}
 </div>
