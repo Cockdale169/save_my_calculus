@@ -312,8 +312,11 @@ a:hover {
   -webkit-backdrop-filter: saturate(160%) blur(20px);
   border-right: 1px solid var(--border);
   padding: 1rem 0.85rem 2.5rem;
-  position: static;
-  height: auto;
+  position: sticky;
+  top: 57px;
+  height: calc(100vh - 57px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .sidebar-backdrop,
@@ -864,7 +867,11 @@ a:hover {
 }
 
 .formula-aside {
-  position: static;
+  position: sticky;
+  top: 74px;
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--surface-glass);
   backdrop-filter: saturate(170%) blur(18px);
   -webkit-backdrop-filter: saturate(170%) blur(18px);
