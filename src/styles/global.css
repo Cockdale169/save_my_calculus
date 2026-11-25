@@ -631,6 +631,8 @@ a:hover {
   padding: 1.25rem 1.35rem;
   margin-bottom: 1.15rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.025);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 280px;
 }
 
 .step-row {

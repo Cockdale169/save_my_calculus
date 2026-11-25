@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loadAllNodes } from '../data/nodeLoader';
+import { useI18n } from '../store/i18n';
 import { CourseTag, Difficulty, KnowledgeNode, PracticeQuestion } from '../types/curriculum';
 import { UserProgressState } from '../store/progressStore';
 import { MathText } from '../components/MathText';
@@ -18,6 +19,7 @@ export const PracticeCenterPage: React.FC<PracticeCenterPageProps> = ({
 progress,
 onRecordPractice,
 }) => {
+const { lang } = useI18n();
 const [nodes, setNodes] = useState<KnowledgeNode[]>([]);
 const [loading, setLoading] = useState<boolean>(true);
 const [onlyWrong, setOnlyWrong] = useState<boolean>(false);
@@ -25,7 +27,7 @@ const [tagFilter, setTagFilter] = useState<CourseTag | 'ALL'>('ALL');
 const [diffFilter, setDiffFilter] = useState<Difficulty | 'ALL'>('ALL');
 useEffect(() => {
 let active = true;
-loadAllNodes().then((loaded) => {
+loadAllNodes(lang).then((loaded) => {
 if (active) {
 setNodes(loaded);
 setLoading(false);
@@ -34,7 +36,7 @@ setLoading(false);
 return () => {
 active = false;
 };
-}, []);
+}, [lang]);
 if (loading) {
 return (
 <div className="card" style={{ textAlign: 'center', color: 'var(--text-muted)' }}>

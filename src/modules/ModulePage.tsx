@@ -37,7 +37,7 @@ useEffect(() => {
 let active = true;
 setLoading(true);
 setMode('study');
-loadNodeById(nodeId).then((loaded) => {
+loadNodeById(nodeId, lang).then((loaded) => {
 if (active) {
 setNode(loaded);
 setLoading(false);
@@ -46,7 +46,7 @@ setLoading(false);
 return () => {
 active = false;
 };
-}, [nodeId]);
+}, [nodeId, lang]);
 if (loading) {
 return (
 <div className="card" style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
@@ -160,7 +160,7 @@ onClick={() => document.getElementById(sec.id)?.scrollIntoView({ behavior: 'smoo
 <p style={{ marginBottom: 0 }}><MathText text={node.sections.geometricMeaning} /></p>
 </div>
 <div id="sec-formulas" className="card">
-<h2 style={{ marginTop: 0 }}>2. 公式、變數與適用條件</h2>
+<h2 style={{ marginTop: 0 }}>{t('hFormulas')}</h2>
 {node.sections.formulas.map((f, i) => (
 <div key={i} style={{ borderBottom: i < node.sections.formulas.length - 1 ? '1px solid var(--border)' : 'none', paddingBottom: '1rem', marginBottom: '1rem' }}>
 <h4 style={{ margin: '0 0 0.35rem' }}><MathText text={f.name} /></h4>
@@ -171,10 +171,10 @@ onClick={() => document.getElementById(sec.id)?.scrollIntoView({ behavior: 'smoo
 {f.variables.map((v, vi) => <li key={vi}><MathText text={v} /></li>)}
 </ul>
 <p style={{ fontSize: '0.9rem', margin: '0.3rem 0' }}>
-<strong>適用條件：</strong><MathText text={f.conditions} />
+<strong>{t('conditions')}</strong><MathText text={f.conditions} />
 </p>
 <p style={{ fontSize: '0.9rem', color: 'var(--danger)', margin: 0 }}>
-<strong>常見誤用：</strong><MathText text={f.commonMisuse} />
+<strong>{t('commonMisuse')}</strong><MathText text={f.commonMisuse} />
 </p>
 </div>
 ))}
@@ -184,7 +184,7 @@ onClick={() => document.getElementById(sec.id)?.scrollIntoView({ behavior: 'smoo
 <VisualStepFlow steps={node.sections.visualSteps} />
 )}
 <div className="card">
-<h2 style={{ marginTop: 0 }}>3. 標準解題流程</h2>
+<h2 style={{ marginTop: 0 }}>{t('hSop')}</h2>
 <ol style={{ marginBottom: 0 }}>
 {node.sections.solvingSteps.map((s, i) => (
 <li key={i} style={{ marginBottom: '0.35rem' }}><MathText text={s} /></li>
@@ -196,7 +196,7 @@ onClick={() => document.getElementById(sec.id)?.scrollIntoView({ behavior: 'smoo
 )}
 </div>
 <div id="sec-examples" className="card">
-<h2 style={{ marginTop: 0 }}>4. 逐步拆解例題（共 {node.sections.workedExamples.length} 題）</h2>
+<h2 style={{ marginTop: 0 }}>{t('hExamples')} ({node.sections.workedExamples.length})</h2>
 {node.sections.workedExamples.map((ex) => (
 <div key={ex.id} className="example-card">
 <span className={`badge ${ex.category === 'biomedical' ? 'badge-app' : 'badge-c1'}`}>
@@ -233,7 +233,7 @@ onClick={() => document.getElementById(sec.id)?.scrollIntoView({ behavior: 'smoo
 ))}
 </div>
 <div id="sec-errors" className="card">
-<h2 style={{ marginTop: 0 }}>5. 常見錯誤與診斷</h2>
+<h2 style={{ marginTop: 0 }}>{t('hErrors')}</h2>
 {node.sections.commonErrors.map((err, i) => (
 <div key={i} className="callout danger">
 <h4 style={{ marginTop: 0 }}><MathText text={err.title} /></h4>
