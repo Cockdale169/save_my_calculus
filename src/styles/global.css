@@ -311,14 +311,9 @@ a:hover {
   backdrop-filter: saturate(160%) blur(20px);
   -webkit-backdrop-filter: saturate(160%) blur(20px);
   border-right: 1px solid var(--border);
-  padding: 1rem 0.85rem 3.5rem;
-  overflow-y: auto;
-  height: calc(100vh - 57px);
-  position: sticky;
-  top: 57px;
-  overscroll-behavior: contain;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 32px), transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 32px), transparent 100%);
+  padding: 1rem 0.85rem 2.5rem;
+  position: static;
+  height: auto;
 }
 
 .sidebar-backdrop,
@@ -869,11 +864,7 @@ a:hover {
 }
 
 .formula-aside {
-  position: sticky;
-  top: 74px;
-  max-height: calc(100vh - 90px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  position: static;
   background: var(--surface-glass);
   backdrop-filter: saturate(170%) blur(18px);
   -webkit-backdrop-filter: saturate(170%) blur(18px);
