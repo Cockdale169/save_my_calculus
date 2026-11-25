@@ -11,7 +11,10 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) return false;
+    return true;
+  });
   const [spotlightOpen, setSpotlightOpen] = useState(false);
   const [scrollPct, setScrollPct] = useState(0);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -125,7 +128,25 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
 
       <div className={`workspace-grid ${sidebarOpen ? '' : 'sidebar-collapsed'}`}>
         {sidebarOpen && (
+          <div
+            className="sidebar-backdrop"
+            onClick={() => setSidebarOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+        {sidebarOpen && (
           <aside className="sidebar" aria-label="章節導覽">
+            <div className="sidebar-mobile-header">
+              <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>章節導覽</span>
+              <button
+                type="button"
+                className="btn btn-sm"
+                onClick={() => setSidebarOpen(false)}
+                aria-label="關閉章節導覽"
+              >
+                <X size={15} /> 關閉
+              </button>
+            </div>
             <div className="sidebar-progress-card">
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 600 }}>
                 <span>學習進度</span>

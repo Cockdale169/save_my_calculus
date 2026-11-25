@@ -311,11 +311,17 @@ a:hover {
   backdrop-filter: saturate(160%) blur(20px);
   -webkit-backdrop-filter: saturate(160%) blur(20px);
   border-right: 1px solid var(--border);
-  padding: 1.1rem 0.9rem 2rem;
+  padding: 1.1rem 0.9rem 2.5rem;
   overflow-y: auto;
-  max-height: calc(100vh - 57px);
+  height: calc(100vh - 57px);
   position: sticky;
   top: 57px;
+  overscroll-behavior: contain;
+}
+
+.sidebar-backdrop,
+.sidebar-mobile-header {
+  display: none;
 }
 
 .sidebar-progress-card {
@@ -1091,15 +1097,34 @@ th {
   .workspace-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 75;
+    background: rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
   .sidebar {
     position: fixed;
     left: 0;
-    top: 92px;
+    top: 0;
     bottom: 0;
-    width: min(290px, 84vw);
-    z-index: 40;
-    padding-left: max(0.9rem, env(safe-area-inset-left));
-    box-shadow: 12px 0 36px rgba(0, 0, 0, 0.22);
+    height: 100dvh;
+    width: min(310px, 85vw);
+    z-index: 80;
+    padding: 0.9rem 0.95rem 2.5rem max(0.95rem, env(safe-area-inset-left));
+    background: var(--surface);
+    box-shadow: 16px 0 44px rgba(0, 0, 0, 0.28);
+  }
+  .sidebar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
+    border-bottom: 1px solid var(--border);
   }
   .workspace-grid.sidebar-collapsed .sidebar {
     display: none;
