@@ -311,12 +311,14 @@ a:hover {
   backdrop-filter: saturate(160%) blur(20px);
   -webkit-backdrop-filter: saturate(160%) blur(20px);
   border-right: 1px solid var(--border);
-  padding: 1.1rem 0.9rem 2.5rem;
+  padding: 1rem 0.85rem 3.5rem;
   overflow-y: auto;
   height: calc(100vh - 57px);
   position: sticky;
   top: 57px;
   overscroll-behavior: contain;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 32px), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 32px), transparent 100%);
 }
 
 .sidebar-backdrop,
@@ -362,11 +364,11 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   gap: 0.45rem;
-  padding: 0.48rem 0.72rem;
-  border-radius: 11px;
-  font-size: 0.85rem;
+  padding: 0.38rem 0.68rem;
+  border-radius: 10px;
+  font-size: 0.83rem;
   color: var(--text);
-  margin-bottom: 0.16rem;
+  margin-bottom: 0.12rem;
   transition: all 0.2s var(--ease);
 }
 
@@ -1117,6 +1119,8 @@ th {
     padding: 0.9rem 0.95rem 2.5rem max(0.95rem, env(safe-area-inset-left));
     background: var(--surface);
     box-shadow: 16px 0 44px rgba(0, 0, 0, 0.28);
+    -webkit-mask-image: none;
+    mask-image: none;
   }
   .sidebar-mobile-header {
     display: flex;
