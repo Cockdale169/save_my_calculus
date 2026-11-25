@@ -116,12 +116,23 @@ return (
 {mode === 'study' && (
 <div>
 <div className="anchor-strip">
-<a href="#sec-symbols" className="btn btn-sm">符號文法</a>
-<a href="#sec-concept" className="btn btn-sm">核心直覺與定義</a>
-<a href="#sec-formulas" className="btn btn-sm">公式與條件</a>
-<a href="#sec-steps" className="btn btn-sm">圖文步驟</a>
-<a href="#sec-examples" className="btn btn-sm">完整例題 ({node.sections.workedExamples.length})</a>
-<a href="#sec-errors" className="btn btn-sm">常見錯誤</a>
+{[
+{ id: 'sec-symbols', label: '符號文法' },
+{ id: 'sec-concept', label: '核心直覺與定義' },
+{ id: 'sec-formulas', label: '公式與條件' },
+{ id: 'sec-steps', label: '圖文步驟' },
+{ id: 'sec-examples', label: `完整例題 (${node.sections.workedExamples.length})` },
+{ id: 'sec-errors', label: '常見錯誤' },
+].map((sec) => (
+<button
+key={sec.id}
+type="button"
+className="btn btn-sm"
+onClick={() => document.getElementById(sec.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+>
+{sec.label}
+</button>
+))}
 </div>
 <div id="sec-symbols">
 <SymbolRulesCard moduleRules={node.sections.symbolRules} />
