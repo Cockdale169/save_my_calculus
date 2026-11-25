@@ -148,9 +148,6 @@ return (
 viewBox={`0 0 ${W} ${H}`}
 width="100%"
 style={{
-background: '#fafcff',
-border: '1px solid #cbd5e1',
-borderRadius: 8,
 cursor: 'grab',
 touchAction: 'none',
 }}

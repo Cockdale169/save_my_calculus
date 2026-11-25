@@ -85,7 +85,7 @@ return inWeek && matchesTag;
 });
 const isExam = w.topics.some((t) => t.includes('期中考') || t.includes('期末考') || t.includes('小考'));
 return (
-<tr key={w.week} style={{ background: isExam ? '#fffbeb' : undefined }}>
+<tr key={w.week} style={{ background: isExam ? 'var(--warn-soft)' : undefined }}>
 <td>
 <strong>W{w.week}</strong>
 {course === 'C2' && (

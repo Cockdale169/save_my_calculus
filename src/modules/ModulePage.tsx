@@ -255,7 +255,7 @@ return (
 <h2 style={{ marginTop: '0.35rem' }}>這個概念會考哪些題型？看到關鍵字直接照步驟做！</h2>
 <div className="card-grid">
 {node.sections.quickReview.examPatterns.map((ep, idx) => (
-<div key={idx} style={{ border: '1px solid var(--border)', borderRadius: 8, padding: '0.85rem', background: '#fafcff' }}>
+<div key={idx} style={{ border: '1px solid var(--border)', borderRadius: 14, padding: '0.9rem', background: 'var(--surface-alt)' }}>
 <h4 style={{ margin: '0 0 0.3rem', color: 'var(--primary)' }}><MathText text={ep.examType} /></h4>
 <div style={{ fontSize: '0.84rem', color: 'var(--warn)', fontWeight: 600, marginBottom: '0.45rem' }}>
 題目關鍵字：<MathText text={ep.triggerWords} />
@@ -269,7 +269,7 @@ return (
 <div className="callout ok" style={{ marginTop: '0.6rem', marginBottom: 0, fontSize: '0.85rem', padding: '0.55rem 0.75rem' }}>
 <div><strong>考題範例：</strong><MathText text={ep.quickSample.problem} /></div>
 <div style={{ marginTop: '0.25rem' }}><strong>速解：</strong><MathText text={ep.quickSample.fastSolve} /></div>
-<div style={{ marginTop: '0.2rem', color: '#166534' }}><strong>答案：</strong><MathText text={ep.quickSample.answer} /></div>
+<div style={{ marginTop: '0.2rem', color: 'var(--ok)' }}><strong>答案：</strong><MathText text={ep.quickSample.answer} /></div>
 </div>
 )}
 </div>

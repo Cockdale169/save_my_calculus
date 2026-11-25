@@ -21,7 +21,7 @@ return (
 <h3 style={{ marginTop: 0, color: 'var(--primary)' }}>模組 {mod}</h3>
 <div className="card-grid">
 {nodes.map((node) => (
-<div key={node.id} style={{ border: '1px solid var(--border)', borderRadius: 8, padding: '0.85rem', background: '#fafcff' }}>
+<div key={node.id} style={{ border: '1px solid var(--border)', borderRadius: 14, padding: '0.9rem', background: 'var(--surface-alt)' }}>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.4rem' }}>
 {node.contentStatus === 'verified' ? (
 <Link to={`/module/${node.id}`} style={{ fontWeight: 700 }}>{node.title}</Link>

@@ -27,7 +27,7 @@ avoidConfusion: '$\\sin^{-1}(x)$ 是反三角函數，不是 $\\frac{1}{\\sin x}
 export const SymbolRulesCard: React.FC<{ moduleRules?: SymbolRule[] }> = ({ moduleRules }) => {
 const [showUniversal, setShowUniversal] = useState<boolean>(false);
 return (
-<div className="card" style={{ borderLeft: '4px solid #7c3aed', background: '#faf8ff' }}>
+<div className="card" style={{ borderLeft: '4px solid #7c3aed', background: 'var(--tint-purple)' }}>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
 <span className="badge badge-c2">零基礎符號文法</span>
@@ -68,11 +68,11 @@ return (
 )}
 {moduleRules && moduleRules.length > 0 && (
 <div style={{ marginTop: '0.75rem' }}>
-<strong style={{ fontSize: '0.9rem', color: '#5b21b6' }}>本單元專屬新符號規則：</strong>
+<strong style={{ fontSize: '0.9rem', color: 'var(--tint-purple-text)' }}>本單元專屬新符號規則：</strong>
 <div className="card-grid" style={{ marginTop: '0.45rem' }}>
 {moduleRules.map((r, i) => (
-<div key={i} style={{ background: '#fff', border: '1px solid #ddd6fe', borderRadius: 8, padding: '0.75rem' }}>
-<div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#5b21b6', marginBottom: '0.2rem' }}>
+<div key={i} style={{ background: 'var(--surface)', border: '1px solid var(--tint-purple-border)', borderRadius: 12, padding: '0.85rem' }}>
+<div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--tint-purple-text)', marginBottom: '0.2rem' }}>
 <MathText text={r.symbol} />
 </div>
 <div style={{ fontSize: '0.86rem', marginBottom: '0.25rem' }}>
@@ -81,7 +81,7 @@ return (
 <div style={{ fontSize: '0.85rem', marginBottom: '0.25rem' }}>
 <strong>符號規則：</strong><MathText text={r.grammarRule} />
 </div>
-<div style={{ fontSize: '0.85rem', marginBottom: '0.25rem', color: '#0f5c8a' }}>
+<div style={{ fontSize: '0.85rem', marginBottom: '0.25rem', color: 'var(--primary)' }}>
 <strong>生活譬喻：</strong><MathText text={r.metaphor} />
 </div>
 <div style={{ fontSize: '0.83rem', color: 'var(--danger)' }}>

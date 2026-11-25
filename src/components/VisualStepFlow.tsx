@@ -66,12 +66,12 @@ gap: '1rem',
 alignItems: 'center',
 flexWrap: 'wrap',
 border: '1px solid var(--border)',
-borderRadius: 10,
-padding: '0.85rem',
-background: '#fafcff',
+borderRadius: 14,
+padding: '0.9rem',
+background: 'var(--surface-alt)',
 }}
 >
-<div style={{ flexShrink: 0 }}>
+<div className="svg-adaptive" style={{ flexShrink: 0, padding: '0.2rem' }}>
 <StepDiagramSvg type={st.diagramType} />
 </div>
 <div style={{ flex: 1, minWidth: 220 }}>
@@ -81,7 +81,7 @@ background: '#fafcff',
 <div style={{ fontSize: '0.9rem', marginBottom: '0.25rem' }}>
 <strong>生活譬喻：</strong><MathText text={st.metaphor} />
 </div>
-<div style={{ fontSize: '0.9rem', marginBottom: '0.25rem', color: '#0d9488' }}>
+<div style={{ fontSize: '0.9rem', marginBottom: '0.25rem', color: 'var(--tint-teal-text)' }}>
 <strong>應用小例子：</strong><MathText text={st.appliedExample} />
 </div>
 <div style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>

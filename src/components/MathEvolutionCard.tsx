@@ -166,7 +166,7 @@ if (s.deepDive) next[idx] = nextState;
 setOpenIndices(next);
 };
 return (
-<div className="card" style={{ borderLeft: '4px solid #b45309', background: '#fffcf5' }}>
+<div className="card" style={{ borderLeft: '4px solid var(--warn)', background: 'var(--tint-amber)' }}>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
 <div>
 <span className="badge badge-hs">數學演進脈絡</span>
@@ -185,27 +185,27 @@ return (
 <div
 key={idx}
 style={{
-paddingLeft: '0.85rem',
-borderLeft: '3px solid #f59e0b',
-background: '#ffffff',
-borderRadius: '0 8px 8px 0',
-paddingTop: '0.6rem',
-paddingBottom: '0.6rem',
-paddingRight: '0.75rem',
-borderTop: '1px solid #fef3c7',
-borderRight: '1px solid #fef3c7',
-borderBottom: '1px solid #fef3c7',
+paddingLeft: '0.9rem',
+borderLeft: '3px solid var(--warn)',
+background: 'var(--surface)',
+borderRadius: '0 12px 12px 0',
+paddingTop: '0.65rem',
+paddingBottom: '0.65rem',
+paddingRight: '0.8rem',
+borderTop: '1px solid var(--tint-amber-border)',
+borderRight: '1px solid var(--tint-amber-border)',
+borderBottom: '1px solid var(--tint-amber-border)',
 }}
 >
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem', flexWrap: 'wrap' }}>
 <div style={{ flex: 1, minWidth: 220 }}>
-<div style={{ fontWeight: 700, color: '#92400e', fontSize: '0.98rem' }}>
+<div style={{ fontWeight: 700, color: 'var(--tint-amber-text)', fontSize: '0.98rem' }}>
 {idx + 1}. <MathText text={ev.stage} />
 </div>
 <div style={{ fontSize: '0.88rem', marginTop: '0.25rem' }}>
 <strong>遇到的難題：</strong><MathText text={ev.question} />
 </div>
-<div style={{ fontSize: '0.88rem', color: '#0f5c8a', marginTop: '0.2rem' }}>
+<div style={{ fontSize: '0.88rem', color: 'var(--primary)', marginTop: '0.2rem' }}>
 <strong>關鍵突破：</strong><MathText text={ev.breakthrough} />
 </div>
 </div>
@@ -227,10 +227,10 @@ style={{ flexShrink: 0 }}
 style={{
 marginTop: '0.75rem',
 paddingTop: '0.75rem',
-borderTop: '1px dashed #fcd34d',
+borderTop: '1px dashed var(--tint-amber-border)',
 }}
 >
-<div style={{ fontWeight: 700, color: '#0f5c8a', marginBottom: '0.5rem', fontSize: '0.94rem' }}>
+<div style={{ fontWeight: 700, color: 'var(--primary)', marginBottom: '0.5rem', fontSize: '0.94rem' }}>
 <MathText text={ev.deepDive.title} />
 </div>
 <div
@@ -243,14 +243,16 @@ alignItems: 'start',
 >
 <div
 style={{
-background: '#f8fafc',
+background: 'var(--surface-alt)',
 border: '1px solid var(--border)',
-borderRadius: 8,
+borderRadius: 12,
 padding: '0.65rem',
 }}
 >
+<div className="svg-adaptive" style={{ padding: '0.35rem' }}>
 <EvolutionSvg type={ev.deepDive.diagramType} />
-<div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '0.35rem' }}>
+</div>
+<div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '0.45rem' }}>
 <MathText text={ev.deepDive.diagramCaption} />
 </div>
 </div>
@@ -259,14 +261,14 @@ padding: '0.65rem',
 <div
 key={ci}
 style={{
-background: '#f0f9ff',
-borderLeft: '3px solid #0284c7',
-borderRadius: 6,
-padding: '0.45rem 0.65rem',
+background: 'var(--tint-blue)',
+borderLeft: '3px solid var(--primary)',
+borderRadius: 10,
+padding: '0.5rem 0.7rem',
 fontSize: '0.86rem',
 }}
 >
-<div style={{ fontWeight: 700, color: '#0369a1' }}><MathText text={c.term} /></div>
+<div style={{ fontWeight: 700, color: 'var(--primary)' }}><MathText text={c.term} /></div>
 <div style={{ marginTop: '0.15rem' }}><MathText text={c.plainExplain} /></div>
 {c.formula && (
 <div style={{ marginTop: '0.25rem' }}>

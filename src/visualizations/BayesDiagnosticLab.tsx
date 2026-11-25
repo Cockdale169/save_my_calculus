@@ -35,13 +35,13 @@ return (
 <tbody>
 <tr>
 <td><strong>有患病 (D)</strong></td>
-<td style={{ background: '#dcfce7', fontWeight: 700 }}>真陽性 TP = {tp.toFixed(1)}</td>
+<td style={{ background: 'var(--ok-soft)', color: 'var(--ok)', fontWeight: 700 }}>真陽性 TP = {tp.toFixed(1)}</td>
 <td>偽陰性 FN = {fn.toFixed(1)}</td>
 <td>{sick.toFixed(1)}</td>
 </tr>
 <tr>
 <td><strong>無患病 (¬D)</strong></td>
-<td style={{ background: '#fee2e2', fontWeight: 700 }}>偽陽性 FP = {fp.toFixed(1)}</td>
+<td style={{ background: 'var(--danger-soft)', color: 'var(--danger)', fontWeight: 700 }}>偽陽性 FP = {fp.toFixed(1)}</td>
 <td>真陰性 TN = {tn.toFixed(1)}</td>
 <td>{healthy.toFixed(1)}</td>
 </tr>

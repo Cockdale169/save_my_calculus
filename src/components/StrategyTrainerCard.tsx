@@ -17,10 +17,10 @@ return (
 key={idx}
 style={{
 border: '1px solid var(--border)',
-borderRadius: 8,
-padding: '0.85rem',
+borderRadius: 12,
+padding: '0.9rem',
 marginTop: '0.75rem',
-background: '#fafcff',
+background: 'var(--surface-alt)',
 }}
 >
 <div style={{ fontSize: '0.86rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>

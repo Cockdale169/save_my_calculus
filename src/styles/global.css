@@ -20,6 +20,15 @@
   --danger-soft: rgba(255, 59, 48, 0.1);
   --ok: #248a3d;
   --ok-soft: rgba(52, 199, 89, 0.13);
+  --tint-blue: #f4f8fe;
+  --tint-purple: #f8f5ff;
+  --tint-purple-border: rgba(124, 58, 237, 0.22);
+  --tint-purple-text: #6d28d9;
+  --tint-amber: #fffaf0;
+  --tint-amber-border: rgba(217, 119, 6, 0.28);
+  --tint-amber-text: #9a4700;
+  --tint-teal: #f2fbf9;
+  --tint-teal-text: #0f766e;
   --radius: 22px;
   --radius-sm: 14px;
   --shadow: 0 2px 12px rgba(0, 0, 0, 0.03), 0 8px 28px rgba(0, 0, 0, 0.045);
@@ -51,6 +60,15 @@
   --danger-soft: rgba(255, 69, 58, 0.15);
   --ok: #30d158;
   --ok-soft: rgba(48, 209, 88, 0.15);
+  --tint-blue: rgba(41, 151, 255, 0.08);
+  --tint-purple: rgba(191, 90, 242, 0.1);
+  --tint-purple-border: rgba(191, 90, 242, 0.28);
+  --tint-purple-text: #d8b4fe;
+  --tint-amber: rgba(255, 159, 10, 0.09);
+  --tint-amber-border: rgba(255, 159, 10, 0.3);
+  --tint-amber-text: #fbbf24;
+  --tint-teal: rgba(48, 213, 200, 0.09);
+  --tint-teal-text: #5eead4;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-hover: 0 14px 40px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(41, 151, 255, 0.25);
   --inset-specular: inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -909,6 +927,58 @@ a:hover {
   width: 100%;
   accent-color: var(--primary);
   cursor: pointer;
+}
+
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(.cmdk-input),
+select,
+textarea {
+  background: var(--surface-alt);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 0.45rem 0.78rem;
+  font-family: inherit;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(.cmdk-input):focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 3.5px var(--primary-soft);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+code {
+  background: var(--surface-alt);
+  color: var(--primary);
+  padding: 0.12rem 0.42rem;
+  border-radius: 6px;
+  font-size: 0.88em;
+  border: 1px solid var(--border);
+}
+
+.lab-grid svg,
+.svg-adaptive {
+  border-radius: 14px;
+  background: #fbfbfd;
+  border: 1px solid var(--border);
+  transition: filter 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+[data-theme="dark"] .lab-grid svg,
+[data-theme="dark"] .svg-adaptive {
+  filter: invert(0.9) hue-rotate(180deg) saturate(1.18);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 .table-scroll {

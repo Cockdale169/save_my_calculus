@@ -105,13 +105,15 @@ return (
 };
 export const JuniorVisualGuide: React.FC<{ guide: JuniorGuide }> = ({ guide }) => {
 return (
-<div className="card" style={{ borderLeft: '4px solid var(--accent)', background: '#f7fcfb' }}>
+<div className="card" style={{ borderLeft: '4px solid var(--accent)', background: 'var(--tint-teal)' }}>
 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
 <span className="badge badge-app">國一～國三白話圖解導引</span>
 <h3 style={{ margin: 0 }}><MathText text={guide.analogyTitle} /></h3>
 </div>
 <p style={{ marginTop: '0.4rem' }}><MathText text={guide.analogyStory} /></p>
+<div className="svg-adaptive" style={{ padding: '0.4rem', margin: '0.5rem auto', maxWidth: 440 }}>
 <VisualDiagramSvg type={guide.visualType} />
+</div>
 {guide.stepByStepDecode.length > 0 && (
 <div style={{ marginTop: '0.75rem' }}>
 <strong style={{ fontSize: '0.9rem' }}>這章的符號怎麼用白話唸？</strong>

@@ -30,7 +30,7 @@ onClick={() => setActiveKey(k)}
 </div>
 </div>
 {activeKey === 'diff' && (
-<svg viewBox="0 0 680 250" width="100%" style={{ background: '#fafcff', border: '1px solid #e2e8f0', borderRadius: 8 }} role="img" aria-label="極限與微分決策流程圖">
+<svg viewBox="0 0 680 250" width="100%" style={{ display: 'block' }} className="svg-adaptive" role="img" aria-label="極限與微分決策流程圖">
 <rect x={230} y={10} width={220} height={36} rx={8} fill="#0f5c8a" />
 <text x={340} y={32} fontSize={12} fill="#fff" textAnchor="middle" fontWeight="bold">題目問「極限」還是「微分」？</text>
 <line x1={280} y1={46} x2={150} y2={76} stroke="#64748b" strokeWidth={1.8} />
@@ -61,7 +61,7 @@ onClick={() => setActiveKey(k)}
 </svg>
 )}
 {activeKey === 'integral' && (
-<svg viewBox="0 0 680 250" width="100%" style={{ background: '#fafcff', border: '1px solid #e2e8f0', borderRadius: 8 }} role="img" aria-label="積分技巧決策流程圖">
+<svg viewBox="0 0 680 250" width="100%" style={{ display: 'block' }} className="svg-adaptive" role="img" aria-label="積分技巧決策流程圖">
 <rect x={210} y={10} width={260} height={36} rx={8} fill="#0f5c8a" />
 <text x={340} y={32} fontSize={12} fill="#fff" textAnchor="middle" fontWeight="bold">看到積分 ∫ 符號：先檢查上下限！</text>
 <line x1={260} y1={46} x2={125} y2={80} stroke="#64748b" strokeWidth={1.6} />
@@ -85,7 +85,7 @@ onClick={() => setActiveKey(k)}
 </svg>
 )}
 {activeKey === 'ode' && (
-<svg viewBox="0 0 680 250" width="100%" style={{ background: '#fafcff', border: '1px solid #e2e8f0', borderRadius: 8 }} role="img" aria-label="動態系統與ODE決策流程圖">
+<svg viewBox="0 0 680 250" width="100%" style={{ display: 'block' }} className="svg-adaptive" role="img" aria-label="動態系統與ODE決策流程圖">
 <rect x={210} y={10} width={260} height={36} rx={8} fill="#0f5c8a" />
 <text x={340} y={32} fontSize={12} fill="#fff" textAnchor="middle" fontWeight="bold">動態系統：時間是一步步跳還是連續流？</text>
 <line x1={260} y1={46} x2={155} y2={82} stroke="#64748b" strokeWidth={1.8} />
@@ -103,7 +103,7 @@ onClick={() => setActiveKey(k)}
 </svg>
 )}
 {activeKey === 'prob' && (
-<svg viewBox="0 0 680 250" width="100%" style={{ background: '#fafcff', border: '1px solid #e2e8f0', borderRadius: 8 }} role="img" aria-label="機率與分布辨識流程圖">
+<svg viewBox="0 0 680 250" width="100%" style={{ display: 'block' }} className="svg-adaptive" role="img" aria-label="機率與分布辨識流程圖">
 <rect x={210} y={10} width={260} height={36} rx={8} fill="#0f5c8a" />
 <text x={340} y={32} fontSize={12} fill="#fff" textAnchor="middle" fontWeight="bold">機率題：先看問「推論」還是「分布」？</text>
 <line x1={260} y1={46} x2={120} y2={82} stroke="#64748b" strokeWidth={1.6} />
