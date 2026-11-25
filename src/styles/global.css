@@ -897,8 +897,28 @@ a:hover {
 
 .math-block {
   display: block;
+  max-width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   padding: 0.5rem 0;
+}
+
+.katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.2rem 0;
+  margin: 0.4rem 0 !important;
+}
+
+.card,
+.bento-tile,
+.example-card,
+.step-row,
+.main-content {
+  min-width: 0;
 }
 
 .math-inline {
@@ -1123,6 +1143,16 @@ th {
   .anchor-strip .btn {
     white-space: nowrap;
     flex-shrink: 0;
+  }
+  .bento-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bento-span-4,
+  .bento-span-5,
+  .bento-span-6,
+  .bento-span-7,
+  .bento-span-8 {
+    grid-column: auto;
   }
   .card-grid {
     grid-template-columns: minmax(0, 1fr);
