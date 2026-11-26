@@ -4,6 +4,10 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: './',
   plugins: [react()],
+  esbuild: {
+    legalComments: 'none',
+    drop: ['debugger'],
+  },
   build: {
     rollupOptions: {
       output: {
