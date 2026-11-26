@@ -22,9 +22,10 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
   const [showBackTop, setShowBackTop] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     try {
-      return localStorage.getItem('csk-theme') === 'dark' ? 'dark' : 'light';
+      const saved = localStorage.getItem('csk-theme');
+      return saved === 'light' ? 'light' : 'dark';
     } catch {
-      return 'light';
+      return 'dark';
     }
   });
 
@@ -97,6 +98,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, readNodes }) => {
               <BookOpen size={16} />
             </span>
             <span>{t('brand')}</span>
+            <span className="brand-pro-tag">PRO</span>
           </Link>
         </div>
 
